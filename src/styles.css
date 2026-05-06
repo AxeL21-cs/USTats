@@ -534,6 +534,25 @@ p {
   font-size: 13px;
 }
 
+.upload-preview figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.delete-upload-button {
+  min-height: 32px;
+  border: 1px solid #efaaa0;
+  border-radius: 8px;
+  background: #fff0ea;
+  color: #893226;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -1363,6 +1382,11 @@ dd {
     border-top: 1px solid currentColor;
     padding-left: 0;
     padding-top: 12px;
+  }
+
+  .upload-preview figcaption {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .input-action {

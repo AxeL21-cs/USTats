@@ -347,6 +347,10 @@ function GradeDashboard({ name, semesters, setSemesters }) {
     reader.readAsDataURL(file);
   }
 
+  function deleteUploadedGrades() {
+    setSemesters((current) => current.map((semester) => (semester.id === selectedSemester.id ? { ...semester, image: "" } : semester)));
+  }
+
   return (
     <main className="page-grid">
       <section className="page-intro">
@@ -404,7 +408,12 @@ function GradeDashboard({ name, semesters, setSemesters }) {
           {selectedSemester.image && (
             <figure className="upload-preview">
               <img src={selectedSemester.image} alt={`${selectedSemester.name} uploaded grades`} />
-              <figcaption>OCR-ready preview. Use the editable table below as a precise fallback.</figcaption>
+              <figcaption>
+                <span>OCR-ready preview. Use the editable table below as a precise fallback.</span>
+                <button type="button" className="delete-upload-button" onClick={deleteUploadedGrades}>
+                  Delete upload
+                </button>
+              </figcaption>
             </figure>
           )}
           <div className="table-wrap">
