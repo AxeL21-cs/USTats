@@ -1,0 +1,22 @@
+# University of Santo Tomas Colleges and Faculties
+
+- Faculty of Sacred Theology
+- Faculty of Philosophy
+- Faculty of Canon Law
+- Faculty of Civil Law
+- Faculty of Medicine and Surgery
+- Faculty of Pharmacy
+- Faculty of Arts and Letters
+- Faculty of Engineering
+- College of Education
+- College of Science
+- College of Architecture
+- College of Commerce and Business Administration
+- Conservatory of Music
+- College of Nursing
+- College of Rehabilitation Sciences
+- College of Fine Arts and Design
+- College of Tourism and Hospitality Management
+- College of Accountancy
+- College of Information and Computing Sciences
+- Institute of Physical Education and Athletics
