@@ -358,6 +358,13 @@ p {
   color: var(--ink);
 }
 
+.semester-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .segmented button {
   background: var(--white);
   color: var(--ink);
@@ -367,6 +374,30 @@ p {
 .ghost-button {
   background: var(--ink);
   color: var(--white);
+}
+
+.danger-button,
+.reset-button {
+  min-height: 42px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 14px;
+  font-weight: 900;
+}
+
+.danger-button {
+  border: 1px solid #efaaa0;
+  background: #fff0ea;
+  color: #893226;
+}
+
+.reset-button {
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--deep);
 }
 
 .ghost-button.compact {
@@ -407,6 +438,12 @@ p {
   color: #893226;
   background: linear-gradient(90deg, #fff0ea, rgba(255, 255, 255, 0.86));
   border: 1px solid #f2b6a5;
+}
+
+.forecast-banner.pending {
+  color: var(--deep);
+  background: linear-gradient(90deg, #f7efe0, rgba(255, 255, 255, 0.86));
+  border: 1px solid var(--line);
 }
 
 .forecast-message {
@@ -593,6 +630,14 @@ td:first-child input {
 
 td:nth-child(2) input {
   min-width: 0;
+}
+
+.empty-table-cell {
+  height: 92px;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 800;
+  background: rgba(245, 168, 0, 0.06);
 }
 
 th:nth-child(1),

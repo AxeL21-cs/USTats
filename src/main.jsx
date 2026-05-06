@@ -29,6 +29,8 @@ import {
   Save,
   Search,
   Sparkles,
+  RotateCcw,
+  Trash2,
   Trophy,
   Upload,
   User
@@ -62,6 +64,15 @@ const seedSemester = {
     { id: crypto.randomUUID(), subject: "ART_APP", description: "Art Appreciation", lecUnits: 3, labUnits: 0, prelim: 96, finals: 1.25 }
   ]
 };
+
+function createBlankSemester(name = "Semester 1") {
+  return {
+    id: crypto.randomUUID(),
+    name,
+    image: "",
+    subjects: []
+  };
+}
 
 const honors = [
   { tier: "Cum Laude", required: 1.75, color: "#F5A800" },
@@ -338,6 +349,28 @@ function GradeDashboard({ name, semesters, setSemesters }) {
     setSubjectFilter("All subjects");
   }
 
+  function deleteCurrentSemester() {
+    if (semesters.length <= 1) {
+      const blank = createBlankSemester(selectedSemester.name);
+      setSemesters([blank]);
+      setSelectedSemesterId(blank.id);
+      setSubjectFilter("All subjects");
+      return;
+    }
+
+    const remaining = semesters.filter((semester) => semester.id !== selectedSemester.id);
+    setSemesters(remaining);
+    setSelectedSemesterId(remaining[0].id);
+    setSubjectFilter("All subjects");
+  }
+
+  function startFreshGrades() {
+    const blank = createBlankSemester("Semester 1");
+    setSemesters([blank]);
+    setSelectedSemesterId(blank.id);
+    setSubjectFilter("All subjects");
+  }
+
   function handleImageUpload(file) {
     if (!file) return;
     const reader = new FileReader();
@@ -367,9 +400,17 @@ function GradeDashboard({ name, semesters, setSemesters }) {
             </button>
           ))}
         </div>
-        <button className="ghost-button" onClick={addSemester}>
-          <Plus size={16} /> Add semester
-        </button>
+        <div className="semester-actions">
+          <button className="danger-button" onClick={deleteCurrentSemester}>
+            <Trash2 size={16} /> Delete grades
+          </button>
+          <button className="reset-button" onClick={startFreshGrades}>
+            <RotateCcw size={16} /> Start fresh
+          </button>
+          <button className="ghost-button" onClick={addSemester}>
+            <Plus size={16} /> Add semester
+          </button>
+        </div>
       </section>
 
       <section className={`forecast-banner ${safetyForecast.level}`}>
@@ -461,6 +502,13 @@ function GradeDashboard({ name, semesters, setSemesters }) {
                     </td>
                   </tr>
                 ))}
+                {!normalizedSubjects.length && (
+                  <tr>
+                    <td colSpan="8" className="empty-table-cell">
+                      No grades yet. Add a subject or upload a screenshot to start tracking this semester.
+                    </td>
+                  </tr>
+                )}
               </tbody>
               <tfoot>
                 <tr>
@@ -1014,6 +1062,7 @@ function semestralAverage(subjects) {
     .filter((subject) => !subject.subject.toLowerCase().startsWith("nstp"))
     .map((subject) => ({ grade: computeSubjectFinalGrade(subject), units: (Number(subject.lecUnits) || 0) + (Number(subject.labUnits) || 0) }))
     .filter((subject) => subject.units > 0 && Number.isFinite(subject.grade) && subject.grade > 0);
+  if (!weightedSubjects.length) return null;
   return weightedGwa(weightedSubjects);
 }
 
@@ -1033,6 +1082,16 @@ function buildSafetyForecast(subjects, semesterAverage, name) {
     .filter((subject) => Number.isFinite(subject.grade) && subject.grade > 0);
   const atRisk = completed.filter((subject) => subject.grade > 3 || subject.grade === 5);
   const watch = completed.filter((subject) => subject.grade > 2.5 && subject.grade <= 3);
+  if (!completed.length) {
+    return {
+      level: "pending",
+      shortLabel: "Pending",
+      score: 0,
+      atRiskCount: 0,
+      title: `Start fresh, ${name}.`,
+      message: "Add your subjects and finals grades to generate the safety forecast."
+    };
+  }
   const excellentShare = completed.length ? completed.filter((subject) => subject.grade <= 1.5).length / completed.length : 0;
   const average = Number(semesterAverage);
   const averageSafety = Number.isFinite(average) ? Math.max(0, Math.min(100, Math.round(((3 - average) / 2) * 100))) : 0;
