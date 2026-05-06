@@ -543,7 +543,7 @@ function GradeDashboard({ name, semesters, setSemesters }) {
                 <LineChart data={trendData(visibleSubjects)}>
                   <CartesianGrid stroke="#E8DDC7" vertical={false} />
                   <XAxis dataKey="period" />
-                  <YAxis reversed domain={[1, 5]} />
+                  <YAxis domain={[0, 5]} />
                   <Tooltip formatter={(value) => formatGrade(value)} />
                   {visibleSubjects.map((subject, index) => (
                     <Line key={subject.id} type="monotone" dataKey={subject.subject} stroke={gradeBands[index % gradeBands.length].color} strokeWidth={3} dot={{ r: 4 }} />
